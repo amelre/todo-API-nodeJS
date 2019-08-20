@@ -21,11 +21,6 @@ let taskSchema = new Schema({
         type: String,
         enum: ['TODO', 'DONE', 'INPROCESS'],
         default: 'TODO'
-    },
-    pomodoros: {
-        type: Number,
-        required: false,
-        default: 1
     }
 });
 

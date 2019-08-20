@@ -17,7 +17,7 @@ app.post('/tasks/findAll' ,(req, res) => {
     const orderFilter = order || 'asc'
 
     Task.find(filters)
-    .sort({pomodoros: orderFilter})
+    .sort({description: orderFilter})
     .exec( (err, tasksDB)=> {
 
         if(err) return common.commonError(res, 500, err);
@@ -47,14 +47,13 @@ app.get('/tasks/:id' , (req, res) => {
 // 	CREATE TASK (POST)
 // ================================================
 app.post('/tasks' ,(req, res) => {
-    let {description, notes, type, status, pomodoros } = req.body;
+    let {description, notes, type, status } = req.body;
 
     let task = new Task({
         description,
         notes,
         type,
-        status,
-        pomodoros
+        status
     });
 
     task.save( (err, taskDB)=> {
@@ -69,7 +68,7 @@ app.post('/tasks' ,(req, res) => {
 // ================================================
 app.put('/tasks/:id' ,(req, res) => {
     let id = req.params.id;
-    let {description, notes, status, type, pomodoros} = req.body;
+    let {description, notes, status, type} = req.body;
 
     Task.findById(id, (err, taskDB) => {
 
@@ -82,7 +81,6 @@ app.put('/tasks/:id' ,(req, res) => {
         taskDB.notes = notes || taskDB.notes;
         taskDB.status = status || taskDB.status;
         taskDB.type = type || taskDB.type;
-        taskDB.pomodoros = pomodoros || taskDB.pomodoros;
 
         taskDB.save( (err, taskSaved) => {
 
